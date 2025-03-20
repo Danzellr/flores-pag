@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Florería Moderna</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #556B2F;
+    }
+
+    /* Encabezado */
+    header {
+      background-color: #556B2F;
+      color: #FFFFFF;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation: slideDown 0.8s ease;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      animation: fadeIn 1.5s ease;
+    }
+
+    /* Animación de entrada del encabezado */
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Navegación con pestañas */
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #D4AF37;
+      padding: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation: slideUp 0.8s ease;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 1rem;
+      margin: 0 15px;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+      position: relative;
+    }
+
+    nav button::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #FFFFFF;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    nav button:hover {
+      color: #556B2F;
+      transform: translateY(-3px);
+    }
+
+    nav button:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* Animación de entrada de la navegación */
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    /* Contenido de las pestañas */
+    .tab-content {
+      display: none;
+      padding: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Sección Hero */
+    .hero {
+      background: url('img/LOGO FLORERIA-EL RAYO gil.png') no-repeat center center/cover;
+    
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6e8826;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      animation: slideUp 1s ease;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      animation: slideUp 1.2s ease;
+    }
+
+    .btn {
+      background-color: #D4AF37;
+      color: #FFFFFF;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #C0A238;
+    }
+
+    /* Animación de deslizamiento */
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+     /* Catálogo de flores */
+     .catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .flor {
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .flor:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .flor img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .flor:hover img {
+      transform: scale(1.1);
+    }
+
+    .flor h3 {
+      margin: 10px 0;
+      font-size: 1.2rem;
+      color: #556B2F;
+    }
+
+    .flor p {
+      margin: 5px 0;
+      color: #777;
+    }
+
+    .flor .btn {
+      display: inline-block;
+      margin: 10px 0;
+    }
+
+    /* Formularios de inicio de sesión y registro */
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #FFFFFF;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #556B2F;
+    }
+
+    .form-container label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #556B2F;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #D4AF37;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-container button:hover {
+      background-color: #C0A238;
+    }
+
+    .form-container p {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .form-container a {
+      color: #D4AF37;
+      text-decoration: none;
+    }
+
+    /* Sección de contacto */
+    .contacto {
+      text-align: center;
+      padding: 20px;
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 600px;
+    }
+
+    .contacto h2 {
+      color: #556B2F;
+    }
+
+    .contacto p {
+      margin: 10px 0;
+      color: #777;
+    }
+
+    .redes-sociales {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .redes-sociales a {
+      color: #556B2F;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .redes-sociales a:hover {
+      color: #D4AF37;
+    }
+
+    /* Botones flotantes */
+    .floating-buttons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000; /* Para que esté por encima de todo */
+    }
+
+    .floating-btn {
+      background-color: #D4AF37; /* Color dorado */
+      color: #FFFFFF;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .floating-btn.whatsapp {
+      background-color: #25D366; /* Color de WhatsApp */
+    }
+
+    .floating-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Pie de página */
+    footer {
+      background-color: #556B2F;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    /* Estilos específicos para la información del usuario */
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info p {
+      margin: 0;
+      font-size: 1rem;
+      color: #FFFFFF;
+    }
+
+    .user-info button {
+      background-color: #556B2F;
+      color: #FFFFFF;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .user-info button:hover {
+      background-color: #445C2F;
+    }
+    .cart-summary {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      width: 250px;
+      display: none;
+      z-index: 1000;
+    }
+
+    .cart-summary.active {
+      display: block;
+    }
+
+    .cart-summary h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      color: #556B2F;
+    }
+
+    .cart-summary ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .cart-summary li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .cart-summary button {
+      width: 100%;
+      padding: 10px;
+      background-color: #556B2F;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .cart-summary button:hover {
+      background-color: #445C2F;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Florería El Rayo</h1>
+  </header>
+
+  <!-- Navegación con pestañas -->
+  <nav>
+    <div class="nav-buttons">
+    <button onclick="openTab('inicio')">Inicio</button>
+    <button onclick="openTab('catalogo')">Catálogo</button>
+    <button onclick="openTab('login')">Iniciar Sesión</button>
+    <button onclick="openTab('registro')">Registro</button>
+    </div>
+        <div class="user-info" id="userInfo">
+        <!-- Aquí se mostrará el nombre del usuario y el botón de cerrar sesión -->
+        </div>
+  </nav>
+
+  <!-- Contenido de las pestañas -->
+  <div id="inicio" class="tab-content active">
+    <section class="hero">
+      <div>
+        <h2>Flores que inspiran</h2>
+        <p>Detalles que perduran en cada ocasión especial.</p>
+        <a onclick="openTab('catalogo')" class="btn">Ver Catálogo</a>
+      </div>
+    </section>
+
+    <div class="contacto">
+      <h2>Contacto</h2>
+      <p>Dirección:  calle coral #1992 col. Los maestros</p>
+      <p>Correo: floreriaelrayo@gmail.com</p>
+      <p>Telefono: 616 122 1013</p>
+      <div class="redes-sociales">
+        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="info@floreria.com" target="_blank"><i class="far fa-envelope"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="catalogo" class="tab-content">
+    <h2 style="text-align: center; color: #556B2F;">Nuestro Catálogo</h2>
+    <div class="catalogo">
+
+      <div class="flor">
+        <img src="img-flores\arreglo angel.jpg" alt="Ramo de rosas">
+        <h3>Arreglo de Angel</h3>
+        <p>Perfecto para ocasiones especiales.</p>
+        <p><strong>$750.00</strong></p>
+        <button class="btn" onclick="addToCart('Arreglo de Angel', 750)">Agregar al Carrito</button>
+      </div>
+
+      <div class="flor">
+        <img src="img-flores\arreglo funerario.jpg" alt="Tulipanes">
+        <h3>Arreglo Funerario</h3>
+        <p>Coloridos y elegantes.</p>
+        <p><strong>$450.00</strong></p>
+        <button class="btn" onclick="addToCart('Arreglo Funerario', 450)">Agregar al Carrito</button>
+      </div>
+
+      <div class="flor">
+        <img src="img-flores\ramo de cumpleaños.jpg" alt="Girasoles">
+        <h3>Ramo de Cumpleaños</h3>
+        <p>Llenos de alegría y energía.</p>
+        <p><strong>$1000.00</strong></p>
+        <button class="btn" onclick="addToCart('Ramo de Cumpleaños', 1000)">Agregar al Carrito</button>
+      </div>
+
+      <div class="flor">
+        <img src="img-flores\ramo de novia angelit.jpg" alt="Orquídeas">
+        <h3>Ramo de Novia</h3>
+        <p>Exóticas y sofisticadas.</p>
+        <p><strong>$500.00</strong></p>
+        <button class="btn" onclick="addToCart('Ramo de Novia', 500)">Agregar al Carrito</button>
+      </div>
+
+      <div class="flor">
+        <img src="img-flores\ramo princesa.jpg" alt="Orquídeas">
+        <h3>Ramo de Princesa</h3>
+        <p>Ramo de Pincesa</p>
+        <p><strong>$1500.00</strong></p>
+        <button class="btn" onclick="addToCart('Ramo de Princesa', 1500)">Agregar al Carrito</button>
+      </div>
+
+      <div class="flor">
+        <img src="img-flores\Ramo Rossette.jpeg" alt="Orquídeas">
+        <h3>Ramo de Rossette</h3>
+        <p>Bonitas y perfectas para regalar</p>
+        <p><strong>$500.00</strong></p>
+        <button class="btn" onclick="addToCart('Ramo de Rossette', 500)">Agregar al Carrito</button>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <div id="login" class="tab-content">
+    <div class="form-container">
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit" class="btn">Iniciar Sesión</button>
+      </form>
+      <p>¿No tienes una cuenta? <a href="#" onclick="openTab('registro')">Regístrate aquí</a>.</p>
+      <p id="loginError" class="error-message"></p>
+    </div>
+  </div>
+
+  <div id="registro" class="tab-content">
+    <div class="form-container">
+      <h2>Registro</h2>
+      <form id="registerForm">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="email-registro">Correo electrónico:</label>
+        <input type="email" id="email-registro" name="email-registro" required>
+        <label for="password-registro">Contraseña:</label>
+        <input type="password" id="password-registro" name="password-registro" required>
+        <label for="confirmar-password">Confirmar contraseña:</label>
+        <input type="password" id="confirmar-password" name="confirmar-password" required>
+        <button type="submit" class="btn">Registrarse</button>
+      </form>
+      <p>¿Ya tienes una cuenta? <a href="#" onclick="openTab('login')">Inicia sesión aquí</a>.</p>
+      <p id="registerError" class="error-message"></p>
+    </div>
+  </div>
+
+  <!-- Botones flotantes -->
+  <div class="floating-buttons">
+    <div class="floating-btn" onclick="toggleCartSummary()">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cartCount">0</span>
+    </div>
+    <a href="https://wa.me/1234567890" class="floating-btn whatsapp" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- Resumen del carrito -->
+  <div class="cart-summary" id="cartSummary">
+    <h3>Carrito de Compras</h3>
+    <ul id="cartItems"></ul>
+    <p>Total: $<span id="cartTotal">0.00</span></p>
+    <button onclick="checkout()">Finalizar Compra</button>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Florería Moderna. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+ // Función para manejar las pestañas
+ function openTab(tabName) {
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+    }
+     // Carrito de compras
+     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Función para manejar las pestañas
+function openTab(tabName) {
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabContents.forEach(tab => tab.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+}
+
+// Función para agregar productos al carrito
+function addToCart(name, price) {
+  const product = { name, price };
+  cart.push(product);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartUI();
+}
+
+// Función para actualizar la interfaz del carrito
+function updateCartUI() {
+  const cartCount = document.getElementById('cartCount');
+  const cartItems = document.getElementById('cartItems');
+  const cartTotal = document.getElementById('cartTotal');
+
+  cartCount.textContent = cart.length;
+
+  // Mostrar los productos en el resumen del carrito
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span>${item.name}</span>
+      <span>$${item.price.toFixed(2)}</span>
+      <button onclick="removeFromCart(${index})">X</button>
+    `;
+    cartItems.appendChild(li);
+    total += item.price;
+  });
+
+  cartTotal.textContent = total.toFixed(2);
+}
+
+// Función para eliminar un producto del carrito
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartUI();
+}
+
+// Función para mostrar/ocultar el resumen del carrito
+function toggleCartSummary() {
+  const cartSummary = document.getElementById('cartSummary');
+  cartSummary.classList.toggle('active');
+}
+
+// Función para finalizar la compra
+function checkout() {
+  if (cart.length === 0) {
+    alert('El carrito está vacío.');
+    return;
+  }
+  alert('Compra finalizada. Gracias por su compra.');
+  cart = [];
+  localStorage.removeItem('cart');
+  updateCartUI();
+  toggleCartSummary();
+}
+
+// Actualizar la interfaz del carrito al cargar la página
+updateCartUI();
+
+    // Función para guardar usuarios en localStorage
+    function saveUser(user) {
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      users.push(user);
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    // Función para buscar un usuario por correo
+    function findUserByEmail(email) {
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      return users.find(user => user.email === email);
+    }
+
+    // Función para mostrar la información del usuario en la pestaña de inicio
+    function showUserInfo() {
+      const userInfo = document.getElementById('userInfo');
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+      if (loggedInUser) {
+        userInfo.innerHTML = `
+          <p>Bienvenido, <strong>${loggedInUser.nombre}</strong>.</p>
+          <button onclick="logout()">Cerrar Sesión</button>
+        `;
+      } else {
+        userInfo.innerHTML = ''; // Ocultar si no hay sesión activa
+      }
+    }
+
+    // Función para cerrar sesión
+    function logout() {
+      localStorage.removeItem('loggedInUser');
+      showUserInfo();
+      openTab('login');
+    }
+
+    // Registro de usuario
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value;
+      const email = document.getElementById('email-registro').value;
+      const password = document.getElementById('password-registro').value;
+      const confirmPassword = document.getElementById('confirmar-password').value;
+
+      if (password !== confirmPassword) {
+        document.getElementById('registerError').textContent = 'Las contraseñas no coinciden.';
+        return;
+      }
+
+      if (findUserByEmail(email)) {
+        document.getElementById('registerError').textContent = 'El correo ya está registrado.';
+        return;
+      }
+
+      const user = { nombre, email, password };
+      saveUser(user);
+
+      alert('Registro exitoso. Ahora puedes iniciar sesión.');
+      openTab('login');
+    });
+
+    // Inicio de sesión
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const user = findUserByEmail(email);
+
+      if (!user || user.password !== password) {
+        document.getElementById('loginError').textContent = 'Correo o contraseña incorrectos.';
+        return;
+      }
+
+      // Guardar el usuario logueado en localStorage
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+      showUserInfo();
+      openTab('inicio');
+    });
+
+    // Mostrar la información del usuario al cargar la página
+    showUserInfo();
+  </script>
+</body>
+</html>
