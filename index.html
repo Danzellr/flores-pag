@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Florería el Rayo</title>
+  <title>Florería El Rayo</title>
+  <link rel="icon" type="image/x-icon" href="logo sin fondo .png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     /* Estilos generales */
@@ -115,7 +116,7 @@
 
     /* Sección Hero */
     .hero {
-      background: url('LOGO FLORERIA-EL RAYO gil.png') no-repeat center center/cover;
+      background: url('img/LOGO FLORERIA-EL RAYO gil.png') no-repeat center center/cover;
     
       height: 400px;
       display: flex;
@@ -341,7 +342,7 @@
       color: #FFFFFF;
       text-align: center;
       padding: 10px;
-      position: fixed;
+      position: relative;
       bottom: 0;
       width: 100%;
     }
@@ -430,14 +431,14 @@
   <!-- Navegación con pestañas -->
   <nav>
     <div class="nav-buttons">
-    <button onclick="openTab('inicio')">Inicio</button>
-    <button onclick="openTab('catalogo')">Catálogo</button>
-    <button onclick="openTab('login')">Iniciar Sesión</button>
-    <button onclick="openTab('registro')">Registro</button>
+      <button onclick="openTab('inicio')">Inicio</button>
+      <button onclick="openTab('catalogo')">Catálogo</button>
+      <button id="loginTab" onclick="openTab('login')">Iniciar Sesión</button>
+      <button id="registerTab" onclick="openTab('registro')">Registro</button>
     </div>
-        <div class="user-info" id="userInfo">
-        <!-- Aquí se mostrará el nombre del usuario y el botón de cerrar sesión -->
-        </div>
+    <div class="user-info" id="userInfo">
+      <!-- Aquí se mostrará el nombre del usuario y el botón de cerrar sesión -->
+    </div>
   </nav>
 
   <!-- Contenido de las pestañas -->
@@ -469,7 +470,7 @@
     <div class="catalogo">
 
       <div class="flor">
-        <img src="arreglo angel.jpg" alt="Ramo de rosas">
+        <img src="img-flores\arreglo angel.jpg" alt="Ramo de rosas">
         <h3>Arreglo de Angel</h3>
         <p>Perfecto para ocasiones especiales.</p>
         <p><strong>$750.00</strong></p>
@@ -477,7 +478,7 @@
       </div>
 
       <div class="flor">
-        <img src="arreglo funerario.jpg" alt="Tulipanes">
+        <img src="img-flores\arreglo funerario.jpg" alt="Tulipanes">
         <h3>Arreglo Funerario</h3>
         <p>Coloridos y elegantes.</p>
         <p><strong>$450.00</strong></p>
@@ -485,7 +486,7 @@
       </div>
 
       <div class="flor">
-        <img src="ramo de cumpleaños.jpg" alt="Girasoles">
+        <img src="img-flores\ramo de cumpleaños.jpg" alt="Girasoles">
         <h3>Ramo de Cumpleaños</h3>
         <p>Llenos de alegría y energía.</p>
         <p><strong>$1000.00</strong></p>
@@ -493,7 +494,7 @@
       </div>
 
       <div class="flor">
-        <img src="ramo de novia angelit.jpg" alt="Orquídeas">
+        <img src="img-flores\ramo de novia angelit.jpg" alt="Orquídeas">
         <h3>Ramo de Novia</h3>
         <p>Exóticas y sofisticadas.</p>
         <p><strong>$500.00</strong></p>
@@ -501,7 +502,7 @@
       </div>
 
       <div class="flor">
-        <img src="ramo princesa.jpg" alt="Orquídeas">
+        <img src="img-flores\ramo princesa.jpg" alt="Orquídeas">
         <h3>Ramo de Princesa</h3>
         <p>Ramo de Pincesa</p>
         <p><strong>$1500.00</strong></p>
@@ -509,7 +510,7 @@
       </div>
 
       <div class="flor">
-        <img src="Ramo Rossette.jpeg" alt="Orquídeas">
+        <img src="img-flores\Ramo Rossette.jpeg" alt="Orquídeas">
         <h3>Ramo de Rossette</h3>
         <p>Bonitas y perfectas para regalar</p>
         <p><strong>$500.00</strong></p>
@@ -518,7 +519,6 @@
 
     </div>
   </div>
-
 
 
   <div id="login" class="tab-content">
@@ -657,6 +657,31 @@ function checkout() {
 // Actualizar la interfaz del carrito al cargar la página
 updateCartUI();
 
+    // Función para mostrar/ocultar las pestañas de inicio de sesión y registro
+    
+
+function showUserInfo() {
+      const userInfo = document.getElementById('userInfo');
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+      if (loggedInUser) {
+        userInfo.innerHTML = `
+          <p>Bienvenido, <strong>${loggedInUser.nombre}</strong></p>
+          <button onclick="logout()">Cerrar Sesión</button>
+        `;
+        toggleAuthTabs(false); // Ocultar pestañas de inicio de sesión y registro
+      } else {
+        userInfo.innerHTML = ''; // Ocultar si no hay sesión activa
+        toggleAuthTabs(true); // Mostrar pestañas de inicio de sesión y registro
+      }
+    }
+    function toggleAuthTabs(show) {
+      const loginTab = document.getElementById('loginTab');
+      const registerTab = document.getElementById('registerTab');
+      loginTab.style.display = show ? 'block' : 'none';
+      registerTab.style.display = show ? 'block' : 'none';
+    }
+
     // Función para guardar usuarios en localStorage
     function saveUser(user) {
       const users = JSON.parse(localStorage.getItem('users')) || [];
@@ -670,20 +695,7 @@ updateCartUI();
       return users.find(user => user.email === email);
     }
 
-    // Función para mostrar la información del usuario en la pestaña de inicio
-    function showUserInfo() {
-      const userInfo = document.getElementById('userInfo');
-      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
-      if (loggedInUser) {
-        userInfo.innerHTML = `
-          <p>Bienvenido, <strong>${loggedInUser.nombre}</strong>.</p>
-          <button onclick="logout()">Cerrar Sesión</button>
-        `;
-      } else {
-        userInfo.innerHTML = ''; // Ocultar si no hay sesión activa
-      }
-    }
 
     // Función para cerrar sesión
     function logout() {
