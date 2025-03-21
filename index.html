@@ -557,6 +557,63 @@
     .redes-sociales a:hover {
       color: #D4AF37;
     }
+    /* Estilos para el formulario de pago */
+.payment-form {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  display: none;
+  z-index: 1000;
+}
+
+.payment-form h3 {
+  margin: 0 0 15px;
+  font-size: 1.5rem;
+  color: #556B2F;
+}
+
+.payment-form label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #556B2F;
+}
+
+.payment-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.payment-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #556B2F;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.payment-form button[type="button"] {
+  background-color: #D4AF37;
+}
+
+.payment-form button:hover {
+  background-color: #445C2F;
+}
+
+.payment-form button[type="button"]:hover {
+  background-color: #C0A238;
+}
   </style>
 </head>
 <body>
@@ -702,19 +759,75 @@
     </a>
   </div>
 
-  <!-- Resumen del carrito -->
-  <div class="cart-summary" id="cartSummary">
-    <h3>Carrito de Compras</h3>
-    <ul id="cartItems"></ul>
-    <p>Total: $<span id="cartTotal">0.00</span></p>
-    <button onclick="checkout()">Finalizar Compra</button>
-  </div>
+<!-- Resumen del carrito -->
+<div class="cart-summary" id="cartSummary">
+  <h3>Carrito de Compras</h3>
+  <ul id="cartItems"></ul>
+  <p>Total: $<span id="cartTotal">0.00</span></p>
+  <button onclick="showPaymentForm()">Proceder al Pago</button>
+</div>
+
+<!-- Formulario de pago (oculto inicialmente) -->
+<div class="payment-form" id="paymentForm">
+  <h3>Método de Pago</h3>
+  <form id="paymentDetails">
+    <label for="cardNumber">Número de Tarjeta:</label>
+    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+
+    <label for="cardName">Nombre en la Tarjeta:</label>
+    <input type="text" id="cardName" placeholder="Juan Pérez" required>
+
+    <label for="expiryDate">Fecha de Expiración:</label>
+    <input type="text" id="expiryDate" placeholder="MM/YY" required>
+
+    <label for="cvv">CVV:</label>
+    <input type="text" id="cvv" placeholder="123" required>
+
+    <button type="submit">Pagar</button>
+    <button type="button" onclick="hidePaymentForm()">Cancelar</button>
+  </form>
+</div>
 
   <footer>
     <p>&copy; 2023 Florería Moderna. Todos los derechos reservados.</p>
   </footer>
 
   <script>
+    // Función para mostrar el formulario de pago
+function showPaymentForm() {
+  const paymentForm = document.getElementById('paymentForm');
+  paymentForm.style.display = 'block';
+}
+
+// Función para ocultar el formulario de pago
+function hidePaymentForm() {
+  const paymentForm = document.getElementById('paymentForm');
+  paymentForm.style.display = 'none';
+}
+
+// Función para manejar el envío del formulario de pago
+document.getElementById('paymentDetails').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  // Simulación de validación de pago
+  const cardNumber = document.getElementById('cardNumber').value;
+  const cardName = document.getElementById('cardName').value;
+  const expiryDate = document.getElementById('expiryDate').value;
+  const cvv = document.getElementById('cvv').value;
+
+  if (!cardNumber || !cardName || !expiryDate || !cvv) {
+    alert('Por favor, completa todos los campos.');
+    return;
+  }
+
+  // Simulación de pago exitoso
+  alert('Pago exitoso. Gracias por su compra.');
+  cart = []; // Vaciar el carrito
+  localStorage.removeItem('cart');
+  updateCartUI();
+  hidePaymentForm();
+  toggleCartSummary();
+});
  // Función para manejar las pestañas
  function openTab(tabName) {
       const tabContents = document.querySelectorAll('.tab-content');
